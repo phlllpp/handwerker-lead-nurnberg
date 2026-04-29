@@ -4,7 +4,588 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Elektro Valianos – Elektromeister Nürnberg</title>
-  <meta name="description" content="Elektro Valianos steht in Nürnberg für professionelle Elektroinstallationen, schnellen Service und höchste Qualitätsstandards – persönlich und zuverlässig.
+  <meta name="description" content="Elektro Valianos — Meisterbetrieb für Elektrotechnik in Nürnberg. Zuverlässig, sauber, termingerecht." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --navy:    #152238;
+      --navy2:   #1C2F4A;
+      --accent:  #8B0000;
+      --accent2: #A80000;
+      --amber:   #8B0000;
+      --amber2:  #A80000;
+      --cream:   #F2EDE5;
+      --muted:   #8896AB;
+      --border:  rgba(242, 237, 229, 0.1);
+      --serif:   'DM Serif Display', Georgia, serif;
+      --sans:    'Outfit', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--navy); }
+    body {
+      font-family: var(--sans);
+      font-weight: 400;
+      color: var(--cream);
+      background: var(--navy);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SKIP LINK ── */
+    .skip {
+      position: absolute; left: -9999px; top: 16px;
+      background: var(--amber); color: #fff;
+      padding: 8px 16px; font-size: .8rem; z-index: 9999;
+    }
+    .skip:focus { left: 16px; }
+
+    /* ── NAV ── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw; height: 66px;
+      background: rgba(11, 17, 32, 0.72);
+      backdrop-filter: blur(8px);
+      transition: background .3s, border-color .3s;
+      border-bottom: 1px solid var(--border);
+    }
+    #nav.solid {
+      background: rgba(11, 17, 32, 0.97);
+      backdrop-filter: blur(16px);
+      border-color: rgba(242, 237, 229, 0.14);
+    }
+
+    /* Logo lives on the hero, not the nav */
+    .hero-logo {
+      position: absolute;
+      top: 80px;
+      left: 7vw;
+      z-index: 3;
+    }
+    .hero-logo img {
+      height: 88px;
+      width: auto;
+      display: block;
+      /* ensure readable on any background */
+      filter: drop-shadow(0 2px 12px rgba(0,0,0,0.55));
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 2.4rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: .9rem; font-weight: 400; letter-spacing: .02em;
+      color: rgba(242, 237, 229, 0.72); text-decoration: none;
+      position: relative; transition: color .25s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1px; background: var(--cream);
+      transition: width .3s ease;
+    }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--amber); color: #fff !important;
+      padding: .52rem 1.4rem; border-radius: 4px;
+      font-weight: 500 !important;
+      white-space: nowrap;
+      transition: background .25s !important;
+    }
+    .nav-cta:hover { background: var(--amber2) !important; }
+    .nav-cta::after { display: none !important; }
+
+    /* Hamburger */
+    .nav-burger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-burger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--cream); border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none; position: fixed; top: 66px; left: 0; right: 0; bottom: 0;
+      background: rgba(11, 17, 32, 0.98); backdrop-filter: blur(16px);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.5rem; z-index: 190;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-family: var(--serif); font-size: 2rem; font-style: italic;
+      color: var(--cream); text-decoration: none; transition: color .25s;
+    }
+    .nav-mobile a:hover { color: var(--amber); }
+    .nav-mobile .mob-cta {
+      font-family: var(--sans); font-size: .9rem; font-style: normal;
+      background: var(--amber); padding: .75rem 2.2rem; border-radius: 4px;
+      font-weight: 500;
+    }
+    .nav-mobile .mob-cta:hover { background: var(--amber2); color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100dvh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 7vw 0;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      z-index: 0;
+    }
+
+    .hero-scrim {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(11,17,32,0.35) 0%,
+        rgba(11,17,32,0.15) 30%,
+        rgba(11,17,32,0.55) 65%,
+        rgba(11,17,32,0.92) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      padding-bottom: 6vh;
+      max-width: 780px;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(139, 0, 0, 0.18); border: 1px solid rgba(139, 0, 0, 0.4);
+      padding: .38rem .9rem; border-radius: 3px;
+      font-size: .72rem; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: #E06060;
+      margin-bottom: 1.8rem;
+      opacity: 0; animation: up .6s .1s forwards;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--amber); animation: blink 2.5s ease-in-out infinite;
+    }
+
+    .hero-h1 {
+      font-family: var(--serif); font-size: clamp(2.6rem, 6vw, 5.2rem);
+      font-weight: 400; line-height: 1.1; letter-spacing: -.01em;
+      color: var(--cream); margin-bottom: 1.4rem;
+      opacity: 0; animation: up .7s .25s forwards;
+    }
+    .hero-h1 em { font-style: italic; color: #E06060; }
+
+    .hero-sub {
+      font-size: 1rem; font-weight: 300; line-height: 1.7;
+      color: rgba(242, 237, 229, 0.72); max-width: 520px;
+      margin-bottom: 2.4rem;
+      opacity: 0; animation: up .6s .4s forwards;
+    }
+
+    .hero-actions {
+      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: up .6s .55s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: var(--amber); color: #fff;
+      padding: .85rem 1.8rem; border-radius: 4px;
+      font-size: .88rem; font-weight: 500; text-decoration: none;
+      transition: background .25s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--amber2); transform: translateY(-1px); }
+    .btn-primary svg { flex-shrink: 0; }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .6rem;
+      border: 1px solid rgba(242, 237, 229, 0.3); color: var(--cream);
+      padding: .85rem 1.8rem; border-radius: 4px;
+      font-size: .88rem; font-weight: 400; text-decoration: none;
+      transition: border-color .25s, background .25s;
+    }
+    .btn-ghost:hover { border-color: rgba(242,237,229,.6); background: rgba(242,237,229,.06); }
+    .btn-ghost svg { flex-shrink: 0; }
+
+    /* Metrics strip */
+    .hero-metrics {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      opacity: 0; animation: up .7s .75s forwards;
+    }
+    .metric {
+      padding: 2.4rem 1.2rem 2.6rem;
+      border-right: 1px solid var(--border);
+    }
+    .metric:first-child { padding-left: 0; }
+    .metric:last-child { border-right: none; padding-right: 0; }
+    .metric-val {
+      font-family: var(--serif); font-size: 2rem; font-weight: 400;
+      color: var(--cream); line-height: 1; margin-bottom: .45rem;
+    }
+    .metric-val sup { font-size: .9rem; color: var(--amber); }
+    .metric-label { font-size: .82rem; font-weight: 400; letter-spacing: .04em; color: var(--muted); }
+
+    /* scroll cue */
+    .scroll-cue {
+      position: absolute; bottom: 11.5rem; right: 7vw; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      font-size: .65rem; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(242,237,229,.35);
+      animation: scrollbob 2.5s ease-in-out infinite;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden; background: var(--amber);
+      padding: .9rem 0; border-top: none;
+    }
+    .marquee-track {
+      display: flex; gap: 0; white-space: nowrap;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-item {
+      font-size: .75rem; font-weight: 500; letter-spacing: .14em;
+      text-transform: uppercase; color: rgba(255,255,255,.9);
+      padding: 0 2.8rem; flex-shrink: 0;
+    }
+    .marquee-dot {
+      color: rgba(255,255,255,.45);
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      padding: 10vh 7vw;
+    }
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 4rem; gap: 2rem;
+    }
+    .section-eyebrow {
+      font-size: .8rem; font-weight: 500; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: .9rem;
+    }
+    .section-h2 {
+      font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400; line-height: 1.15; color: var(--cream);
+    }
+    .section-h2 em { font-style: italic; }
+    .section-sub {
+      font-size: .88rem; font-weight: 300; line-height: 1.7;
+      color: var(--muted); max-width: 360px; text-align: right;
+    }
+
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px;
+      background: var(--border);
+    }
+    .service-card {
+      background: var(--navy); padding: 2.6rem 2.2rem;
+      position: relative; overflow: hidden;
+      transition: background .25s;
+    }
+    .service-card:hover { background: var(--navy2); }
+
+    .service-icon {
+      width: 40px; height: 40px; margin-bottom: 1.6rem;
+      color: var(--amber);
+    }
+    .service-num {
+      position: absolute; top: 1.8rem; right: 1.8rem;
+      font-family: var(--serif); font-style: italic; font-size: 1rem;
+      color: var(--border); user-select: none;
+    }
+    .service-title {
+      font-family: var(--serif); font-size: 1.35rem; font-weight: 400;
+      color: var(--cream); margin-bottom: .9rem; line-height: 1.25;
+    }
+    .service-desc {
+      font-size: .97rem; font-weight: 300; line-height: 1.75;
+      color: var(--muted);
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 10vh 7vw;
+      background: var(--navy2);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8vw;
+      align-items: center;
+    }
+
+    .about-text { display: flex; flex-direction: column; gap: 1.8rem; }
+    .about-h {
+      font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400; line-height: 1.2; color: var(--cream);
+    }
+    .about-h em { font-style: italic; color: #E06060; }
+    .about-p {
+      font-size: 1rem; font-weight: 300; line-height: 1.85; color: var(--muted);
+    }
+
+    .credentials { display: flex; flex-direction: column; gap: 0; margin-top: .5rem; }
+    .cred-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.1rem 0; border-top: 1px solid var(--border);
+    }
+    .cred-icon {
+      width: 36px; height: 36px; background: rgba(200,88,10,.12);
+      border-radius: 4px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--amber);
+    }
+    .cred-title { font-size: .97rem; font-weight: 500; color: var(--cream); }
+    .cred-sub { font-size: .86rem; font-weight: 300; color: var(--muted); margin-top: .15rem; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { padding: 10vh 7vw; }
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+      margin-top: 4rem;
+    }
+    .testi-card {
+      background: var(--navy2); padding: 2rem 1.8rem;
+      border: 1px solid var(--border); border-radius: 2px;
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+    .testi-stars { color: var(--amber); font-size: .9rem; letter-spacing: .1em; }
+    .testi-text {
+      font-size: 1rem; font-weight: 300; line-height: 1.8;
+      color: rgba(242,237,229,.78); flex: 1;
+    }
+    .testi-text::before { content: '\201E'; }
+    .testi-text::after  { content: '\201C'; }
+    .testi-author { font-size: .92rem; font-weight: 500; color: var(--cream); }
+    .testi-role   { font-size: .82rem; font-weight: 300; color: var(--muted); margin-top: .2rem; }
+
+    .rating-strip {
+      display: flex; align-items: center; justify-content: center; gap: 2rem;
+      margin-top: 4rem; padding: 2rem;
+      border: 1px solid var(--border); border-radius: 2px;
+      background: var(--navy2);
+    }
+    .rating-val {
+      font-family: var(--serif); font-size: 3rem; font-weight: 400;
+      color: var(--cream); line-height: 1;
+    }
+    .rating-stars { color: var(--amber); font-size: 1.1rem; letter-spacing: .1em; }
+    .rating-label { font-size: .78rem; font-weight: 300; color: var(--muted); margin-top: .3rem; }
+    .rating-divider { width: 1px; height: 48px; background: var(--border); }
+    .rating-count { font-size: .84rem; font-weight: 300; color: var(--muted); }
+    .rating-count strong { font-weight: 500; color: var(--cream); font-size: 1.2rem; display: block; }
+
+    /* ── CONTACT ── */
+    .contact {
+      padding: 10vh 7vw;
+      background: var(--navy2);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8vw;
+      align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 2.5rem; }
+    .contact-h {
+      font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400; line-height: 1.2; color: var(--cream);
+    }
+    .contact-h em { font-style: italic; }
+    .contact-p {
+      font-size: 1rem; font-weight: 300; line-height: 1.8; color: var(--muted);
+    }
+    .contact-details { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-row {
+      display: flex; align-items: center; gap: .9rem;
+    }
+    .contact-row-icon {
+      width: 38px; height: 38px; background: rgba(200,88,10,.12);
+      border-radius: 4px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--amber);
+    }
+    .contact-row-label { font-size: .78rem; font-weight: 400; letter-spacing: .06em; color: var(--muted); margin-bottom: .15rem; }
+    .contact-row a, .contact-row span {
+      font-size: 1rem; font-weight: 400; color: var(--cream);
+      text-decoration: none; transition: color .25s;
+    }
+    .contact-row a:hover { color: var(--amber); }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .field { display: flex; flex-direction: column; gap: .45rem; }
+    .field label {
+      font-size: .78rem; font-weight: 500; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .field input, .field select, .field textarea {
+      background: rgba(242,237,229,.06); border: 1px solid var(--border);
+      color: var(--cream); font-family: var(--sans); font-size: 1rem; font-weight: 300;
+      padding: .75rem 1rem; border-radius: 3px; outline: none;
+      transition: border-color .25s, background .25s;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(136,150,171,.5); }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: rgba(200,88,10,.6); background: rgba(242,237,229,.08);
+    }
+    .field select { appearance: none; cursor: pointer; }
+    .field select option { background: var(--navy2); }
+    .field textarea { min-height: 120px; resize: vertical; }
+    .form-submit {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: var(--amber); color: #fff; border: none; cursor: pointer;
+      padding: .9rem 2rem; border-radius: 4px;
+      font-family: var(--sans); font-size: .88rem; font-weight: 500;
+      transition: background .25s, transform .15s; width: fit-content;
+    }
+    .form-submit:hover { background: var(--amber2); transform: translateY(-1px); }
+    .form-sent { display: none; padding: 1rem 1.4rem; background: rgba(139,0,0,.15); border: 1px solid rgba(139,0,0,.35); border-radius: 3px; font-size: .88rem; color: #E06060; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 7vw;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo { display: flex; align-items: center; text-decoration: none; }
+    .footer-logo img { height: 28px; width: auto; opacity: .7; }
+    .footer-copy { font-size: .84rem; font-weight: 300; color: var(--muted); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-size: .84rem; font-weight: 300; color: var(--muted);
+      text-decoration: none; transition: color .25s;
+    }
+    .footer-links a:hover { color: var(--cream); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .05s; }
+    .reveal-d2 { transition-delay: .12s; }
+    .reveal-d3 { transition-delay: .19s; }
+    .reveal-d4 { transition-delay: .26s; }
+    .reveal-d5 { transition-delay: .33s; }
+    .reveal-d6 { transition-delay: .40s; }
+
+    /* ── KEYFRAMES ── */
+    @keyframes up {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .4; }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes scrollbob {
+      0%, 100% { transform: translateY(0); opacity: .35; }
+      50%       { transform: translateY(6px); opacity: .55; }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      #nav .nav-links { display: none; }
+      .nav-burger { display: flex; }
+
+      .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+      .metric:nth-child(2) { border-right: none; }
+      .metric { padding: 1.2rem 0 1.4rem; }
+
+      .section-header { flex-direction: column; align-items: flex-start; }
+      .section-sub { text-align: left; max-width: 100%; }
+
+      .services-grid { grid-template-columns: 1fr; }
+
+      .about { grid-template-columns: 1fr; }
+
+      .testi-grid { grid-template-columns: 1fr; }
+      .rating-strip { flex-direction: column; gap: 1.2rem; }
+      .rating-divider { width: 48px; height: 1px; }
+
+      .contact { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+
+      footer { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+      .footer-links { flex-wrap: wrap; gap: 1.2rem; }
+    }
+
+    .about-accent { display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; }
+    .about-year {
+      font-family: var(--serif); font-size: clamp(5rem, 13vw, 8.5rem);
+      color: rgba(242,237,229,.07); line-height: 1; letter-spacing: -.02em;
+      user-select: none;
+    }
+    .about-year-label { font-size: 1rem; font-weight: 300; line-height: 1.65; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip">Zum Inhalt springen</a>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <!-- Logo sitzt auf dem Hero-Bild, Nav enthält nur Links -->
+    <span style="width:1px"></span>
+
+    <ul class="nav-links">
+      <li><a href="#leistungen">Leistungen</a></li>
+      <li><a href="#ueber-uns">Über uns</a></li>
+      <li><a href="#bewertungen">Bewertungen</a></li>
+      <li><a href="#kontakt" class="nav-cta">Projekt anfragen</a></li>
+    </ul>
+
+    <button class="nav-burger" id="burger" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile" id="nav-mobile" role="navigation" aria-label="Mobile Navigation">
+    <a href="#leistungen" class="mob-link">Leistungen</a>
+    <a href="#ueber-uns" class="mob-link">Über uns</a>
+    <a href="#bewertungen" class="mob-link">Bewertungen</a>
+    <a href="#kontakt" class="mob-link mob-cta">Projekt anfragen</a>
+  </div>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-h1">
+      <img
+        class="hero-bg"
+        src="https://pub-15a110fe61e8451b9c39670f928c3acf.r2.dev/handwerker-hero/elektro-avellina/hero.jpg"
+        alt="Elektro bei der Arbeit"
+        width="1408" height="940"
+        fetchpriority="high"
+      />
+      <div class="hero-scrim" aria-hidden="true"></div>
+
+      <!-- Logo groß auf dem Hero, unterhalb der Nav -->
+      <a href="#" class="hero-logo" aria-label="Elektro Valianos – Startseite">
+        <img src="images/logo_processed.png" alt="Elektro Valianos" />
+      </a>
+
+      <div class="hero-content">
+        <div class="hero-badge">Meisterbetrieb · HWK Mittelfranken</div>
+
+        <h1 class="hero-h1" id="hero-h1">
+          Ihr Elektriker<br><em>in Nürnberg</em>
+        </h1>
+
+        <p class="hero-sub">
+          Elektro Valianos ist Ihr persönlicher Ansprechpartner für professionelle Elektroarbeiten in Nürnberg – kompetent, zuverlässig und termingerecht.
         </p>
 
         <div class="hero-actions">
@@ -47,66 +628,66 @@
     <!-- MARQUEE -->
     <div class="marquee-wrap" aria-hidden="true">
       <div class="marquee-track">
-        <span class="marquee-item">⚡ Meisterbetrieb HWK Mittelfranken <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⭐ 5,0 Sterne bei Google <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🔌 Wallbox-Installation <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🏠 Smart Home Lösungen <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🛡️ Geprüfte Elektrosicherheit <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">📍 Ihr Elektriker in Nürnberg <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⚡ Meisterbetrieb HWK Mittelfranken <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⭐ 5,0 Sterne bei Google <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🔌 Wallbox-Installation <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🏠 Smart Home Lösungen <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🛡️ Geprüfte Elektrosicherheit <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">📍 Ihr Elektriker in Nürnberg <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⚡ Meisterbetrieb HWK Mittelfranken <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⭐ 5,0 Sterne bei Google <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🔌 Wallbox-Installation <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🏠 Smart Home Lösungen <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🛡️ Geprüfte Elektrosicherheit <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">📍 Ihr Elektriker in Nürnberg <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⚡ Meisterbetrieb HWK Mittelfranken <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⭐ 5,0 Sterne bei Google <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🔌 Wallbox-Installation <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🏠 Smart Home Lösungen <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🛡️ Geprüfte Elektrosicherheit <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">📍 Ihr Elektriker in Nürnberg <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⚡ Meisterbetrieb HWK Mittelfranken <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⭐ 5,0 Sterne bei Google <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🔌 Wallbox-Installation <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🏠 Smart Home Lösungen <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🛡️ Geprüfte Elektrosicherheit <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">📍 Ihr Elektriker in Nürnberg <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⚡ Meisterbetrieb HWK Mittelfranken <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⭐ 5,0 Sterne bei Google <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🔌 Wallbox-Installation <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🏠 Smart Home Lösungen <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🛡️ Geprüfte Elektrosicherheit <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">📍 Ihr Elektriker in Nürnberg <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⚡ Meisterbetrieb HWK Mittelfranken <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⭐ 5,0 Sterne bei Google <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🔌 Wallbox-Installation <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🏠 Smart Home Lösungen <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🛡️ Geprüfte Elektrosicherheit <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">📍 Ihr Elektriker in Nürnberg <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⚡ Meisterbetrieb HWK Mittelfranken <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⭐ 5,0 Sterne bei Google <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🔌 Wallbox-Installation <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🏠 Smart Home Lösungen <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🛡️ Geprüfte Elektrosicherheit <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">📍 Ihr Elektriker in Nürnberg <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⚡ Meisterbetrieb HWK Mittelfranken <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⭐ 5,0 Sterne bei Google <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🔌 Wallbox-Installation <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🏠 Smart Home Lösungen <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🛡️ Geprüfte Elektrosicherheit <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">📍 Ihr Elektriker in Nürnberg <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⚡ Meisterbetrieb HWK Mittelfranken <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">⭐ 5,0 Sterne bei Google <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🔌 Wallbox-Installation <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🏠 Smart Home Lösungen <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">🛡️ Geprüfte Elektrosicherheit <span class="marquee-dot">·</span></span>
-        <span class="marquee-item">📍 Ihr Elektriker in Nürnberg <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">⚡ Elektroinstallation <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🏠 Smart Home <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔌 Wallbox & E-Mobilität <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">☀️ Photovoltaik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">💡 Beleuchtungstechnik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔍 E-Prüfungen & Wartung <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">⚡ Elektroinstallation <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🏠 Smart Home <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔌 Wallbox & E-Mobilität <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">☀️ Photovoltaik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">💡 Beleuchtungstechnik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔍 E-Prüfungen & Wartung <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">⚡ Elektroinstallation <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🏠 Smart Home <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔌 Wallbox & E-Mobilität <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">☀️ Photovoltaik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">💡 Beleuchtungstechnik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔍 E-Prüfungen & Wartung <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">⚡ Elektroinstallation <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🏠 Smart Home <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔌 Wallbox & E-Mobilität <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">☀️ Photovoltaik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">💡 Beleuchtungstechnik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔍 E-Prüfungen & Wartung <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">⚡ Elektroinstallation <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🏠 Smart Home <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔌 Wallbox & E-Mobilität <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">☀️ Photovoltaik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">💡 Beleuchtungstechnik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔍 E-Prüfungen & Wartung <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">⚡ Elektroinstallation <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🏠 Smart Home <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔌 Wallbox & E-Mobilität <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">☀️ Photovoltaik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">💡 Beleuchtungstechnik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔍 E-Prüfungen & Wartung <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">⚡ Elektroinstallation <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🏠 Smart Home <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔌 Wallbox & E-Mobilität <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">☀️ Photovoltaik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">💡 Beleuchtungstechnik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔍 E-Prüfungen & Wartung <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">⚡ Elektroinstallation <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🏠 Smart Home <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔌 Wallbox & E-Mobilität <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">☀️ Photovoltaik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">💡 Beleuchtungstechnik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔍 E-Prüfungen & Wartung <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">⚡ Elektroinstallation <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🏠 Smart Home <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔌 Wallbox & E-Mobilität <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">☀️ Photovoltaik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">💡 Beleuchtungstechnik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔍 E-Prüfungen & Wartung <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">⚡ Elektroinstallation <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🏠 Smart Home <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔌 Wallbox & E-Mobilität <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">☀️ Photovoltaik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">💡 Beleuchtungstechnik <span class="marquee-dot">·</span></span>
+        <span class="marquee-item">🔍 E-Prüfungen & Wartung <span class="marquee-dot">·</span></span>
       </div>
     </div>
 
@@ -117,7 +698,7 @@
           <div class="section-eyebrow">Leistungen</div>
           <h2 class="section-h2">Was wir für Sie<br><em>umsetzen</em></h2>
         </div>
-        <p class="section-sub">Von der Elektroinstallation bis zur Wallbox – wir bieten Ihnen das komplette Leistungsspektrum moderner Elektrotechnik in Nürnberg.</p>
+        <p class="section-sub">Von der klassischen Elektroinstallation bis zur modernen Smart-Home-Lösung – wir bieten alles aus einer Hand.</p>
       </div>
 
       <div class="services-grid">
@@ -125,37 +706,37 @@
           <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           <span class="service-num">01</span>
           <h3 class="service-title">Elektroinstallation</h3>
-          <p class="service-desc">Fachgerechte Neuinstallationen und Erweiterungen für Privat- und Gewerbekunden in Nürnberg – sauber ausgeführt und normgerecht abgenommen.</p>
+          <p class="service-desc">Fachgerechte Neuinstallationen, Erweiterungen und Sanierungen von Elektroanlagen in Wohn- und Gewerbegebäuden in Nürnberg und Umgebung.</p>
         </div>
         <div class="service-card reveal reveal-d2">
           <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <span class="service-num">02</span>
-          <h3 class="service-title">Unterverteilung & Sicherungstechnik</h3>
-          <p class="service-desc">Modernisierung von Sicherungskästen, Einbau von Unterverteilungen und Schutzschaltern für mehr Sicherheit in Ihrem Zuhause oder Betrieb.</p>
+          <h3 class="service-title">Smart Home</h3>
+          <p class="service-desc">Intelligente Gebäudetechnik für mehr Komfort, Sicherheit und Energieeffizienz – wir planen und installieren Ihr individuelles Smart-Home-System.</p>
         </div>
         <div class="service-card reveal reveal-d3">
           <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           <span class="service-num">03</span>
-          <h3 class="service-title">Smart Home</h3>
-          <p class="service-desc">Intelligente Haussteuerung für Licht, Heizung und Sicherheit – wir planen und installieren Ihr Smart-Home-System in Nürnberg nach Maß.</p>
+          <h3 class="service-title">Wallbox & E-Mobilität</h3>
+          <p class="service-desc">Professionelle Montage und Inbetriebnahme von Wallboxen für Elektrofahrzeuge – sicher, normgerecht und förderfähig installiert.</p>
         </div>
         <div class="service-card reveal reveal-d1">
           <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
           <span class="service-num">04</span>
-          <h3 class="service-title">E-Mobilität & Wallbox</h3>
-          <p class="service-desc">Zertifizierte Wallbox-Installation für Ihr Elektrofahrzeug – schnell, sicher und förderfähig. Wir beraten Sie zur optimalen Ladelösung.</p>
+          <h3 class="service-title">Photovoltaik & Energiespeicher</h3>
+          <p class="service-desc">Wir installieren Solaranlagen und Batteriespeicher für Privat- und Gewerbekunden – für mehr Unabhängigkeit und niedrigere Stromkosten.</p>
         </div>
         <div class="service-card reveal reveal-d2">
           <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
           <span class="service-num">05</span>
           <h3 class="service-title">Beleuchtungstechnik</h3>
-          <p class="service-desc">Von der klassischen Deckenleuchte bis zur modernen LED-Außenbeleuchtung – wir setzen Ihr Zuhause oder Ihre Geschäftsräume ins beste Licht.</p>
+          <p class="service-desc">Moderne LED-Beleuchtungskonzepte für Innen und Außen – energiesparend, stimmungsvoll und auf Ihre Bedürfnisse zugeschnitten.</p>
         </div>
         <div class="service-card reveal reveal-d3">
           <svg class="service-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2zm0 4v8l4 2"/></svg>
           <span class="service-num">06</span>
-          <h3 class="service-title">Reparatur & Störungsdienst</h3>
-          <p class="service-desc">Schnelle Hilfe bei Elektrostörungen und Defekten in Nürnberg und Umgebung – wir sind für Sie da, wenn es darauf ankommt.</p>
+          <h3 class="service-title">Prüfung & Wartung</h3>
+          <p class="service-desc">Regelmäßige DGUV-Prüfungen, Zählerinstallationen und Wartungen Ihrer Elektroanlagen für dauerhaft sicheren Betrieb.</p>
         </div>
       </div>
     </section>
@@ -164,7 +745,7 @@
     <section class="about" id="ueber-uns" aria-labelledby="about-h">
       <div class="about-accent reveal">
         <div class="about-year">2015</div>
-        <div class="about-year-label">Meisterbetrieb<br>in Nürnberg</div>
+        <div class="about-year-label">Meisterbetrieb in Nürnberg<br>· HWK Mittelfranken</div>
       </div>
 
       <div class="about-text reveal">
@@ -173,7 +754,7 @@
           <h2 class="about-h" id="about-h">Meisterqualität.<br><em>Persönlich vertreten.</em></h2>
         </div>
         <p class="about-p">
-          Elektro Valianos steht für handwerkliche Präzision und persönliche Verantwortung. Elektro ist seit 2015 als geprüfter Elektromeister in Nürnberg tätig — bei jedem Auftrag vor Ort, mit klaren Absprachen und ohne Überraschungen bei der Rechnung.
+          Elektro Valianos ist Ihr erfahrener Elektromeisterbetrieb aus Nürnberg – bekannt für sorgfältige Ausführung, transparente Beratung und terminzuverlässigen Service. Mit einem engagierten Team betreuen wir Privatkunden, Vermieter und Gewerbetreibende in Nürnberg und der gesamten Metropolregion. Unsere 79 Fünf-Sterne-Bewertungen sprechen für die Qualität, die wir täglich in jede Baustelle einbringen.
         </p>
 
         <div class="credentials">
@@ -219,24 +800,24 @@
 
       <div class="testi-grid">
           <div class="testi-card reveal">
-            <p class="testi-text">Herr Valianos hat unsere komplette Wohnung neu verkabelt – alles blitzschnell, ordentlich und zum fairen Preis. Absolut empfehlenswert!</p>
+            <p class="testi-text">Herr Valianos hat unsere komplette Wohnung neu verkabelt – schnell, sauber und zu einem fairen Preis. Absolute Empfehlung!</p>
             <div class="testi-meta">
               <div class="testi-author">Markus T.</div>
               <div class="testi-role">Hausbesitzer, Nürnberg-Schweinau</div>
             </div>
           </div>
           <div class="testi-card reveal">
-            <p class="testi-text">Die Wallbox wurde unkompliziert und professionell installiert. Super Beratung und top Ausführung – wir sind rundum zufrieden!</p>
+            <p class="testi-text">Die Wallbox wurde pünktlich installiert und alles wurde verständlich erklärt. Top Betrieb, sehr professionell!</p>
             <div class="testi-meta">
               <div class="testi-author">Sandra K.</div>
               <div class="testi-role">Nürnberg-Gostenhof</div>
             </div>
           </div>
           <div class="testi-card reveal">
-            <p class="testi-text">Kurzfristig einen Termin bekommen, Störung schnell behoben und dabei noch freundlich und kompetent. Genau so soll ein Elektriker sein!</p>
+            <p class="testi-text">Kurzfristiger Termin, freundliches Auftreten und einwandfreie Arbeit. So stelle ich mir einen Handwerksbetrieb vor.</p>
             <div class="testi-meta">
               <div class="testi-author">Thomas R.</div>
-              <div class="testi-role">Gewerbetreibender, Nürnberg-Weststadt</div>
+              <div class="testi-role">Gewerbetreibender, Nürnberg-Gibitzenhof</div>
             </div>
           </div>
         </div>
@@ -303,11 +884,11 @@
           <label for="subject">Leistung</label>
           <select id="subject" name="subject">
             <option>Elektroinstallation</option>
-            <option>Unterverteilung & Sicherungstechnik</option>
             <option>Smart Home</option>
             <option>E-Mobilität / Wallbox</option>
+            <option>Photovoltaik</option>
             <option>Beleuchtungstechnik</option>
-            <option>Reparatur & Störungsdienst</option>
+            <option>Prüfung & Wartung</option>
             <option>Sonstiges</option>
           </select>
         </div>
